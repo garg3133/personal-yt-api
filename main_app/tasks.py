@@ -20,7 +20,6 @@ def fetch_yt_videos():
         publishedAfter = datetime.now() - timedelta(days=5)
 
     params = {
-        'key': settings.YOUTUBE_DATA_API_KEY,
         'part': 'snippet',
         'q': search_query,
         'max_results': 20,
@@ -29,7 +28,20 @@ def fetch_yt_videos():
         'publishedAfter': publishedAfter.strftime(settings.YOUTUBE_DATETIME_FORMAT),
     }
 
-    response = requests.get(yt_search_api_url, params)
+    for api_key in settings.YOUTUBE_DATA_API_KEYS.split(','):
+        params["key"] = api_key
+        response = requests.get(yt_search_api_url, params)
+
+        if response.status_code == 403:
+            # Quota exceeded
+            print("Quota exceeded for one of the key.")
+        else:
+            break
+
+    if response.status_code == 403:
+        print("Quota exceeded for all keys")
+        return
+
     video_result = response.json()["items"]
 
     videos = []

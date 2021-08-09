@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-YOUTUBE_DATA_API_KEY = config("YOUTUBE_DATA_API_KEY")
+YOUTUBE_DATA_API_KEYS = config("YOUTUBE_DATA_API_KEYS")
 YOUTUBE_DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'

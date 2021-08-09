@@ -19,7 +19,7 @@
   * Install the requirements: `$ pip install -r requirements.txt`
   * Create a new file in the root directory of the repository with name `.env` and add the following content in it:
     ```
-    YOUTUBE_DATA_API_KEY = 'your-youtube-api-key'
+    YOUTUBE_DATA_API_KEYS = 'yt-api-key1,yt-api-key2,...'
     ```  
   * Make migrations `$ python manage.py makemigrations`
   * Migrate the changes to the database `$ python manage.py migrate`
@@ -32,7 +32,7 @@
   * Change directory to JagratiWebApp `$ cd personal-yt-api`
   * Create a new file in the root directory of the repository with name `.env` and add the following content in it:
     ```
-    YOUTUBE_DATA_API_KEY = 'yt-api-key1,yt-api-key2,...'
+    YOUTUBE_DATA_API_KEYS = 'yt-api-key1,yt-api-key2,...'
     ```
   * Run migrations `docker-compose run web python manage.py migrate`
   * Build the docker image `docker-compose build`
