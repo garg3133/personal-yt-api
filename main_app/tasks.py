@@ -9,8 +9,8 @@ from .models import YouTubeVideo
 
 @shared_task
 def fetch_yt_videos():
-    print("hello")  
     yt_search_api_url = 'https://www.googleapis.com/youtube/v3/search'
+    search_query = 'tech'
 
     last_saved_video = YouTubeVideo.objects.order_by("-published_at").first()
 
@@ -22,8 +22,8 @@ def fetch_yt_videos():
     params = {
         'key': settings.YOUTUBE_DATA_API_KEY,
         'part': 'snippet',
-        'q': 'tech',
-        'max_results': 5,
+        'q': search_query,
+        'max_results': 20,
         'order': 'date',
         'type': 'video',
         'publishedAfter': publishedAfter.strftime(settings.YOUTUBE_DATETIME_FORMAT),
