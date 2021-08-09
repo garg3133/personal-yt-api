@@ -4,6 +4,10 @@ from .serializers import YouTubeVideoSerializer
 from rest_framework import generics, filters
 
 
+class GetAPIView(generics.ListAPIView):
+    queryset = YouTubeVideo.objects.order_by("-published_at")
+    serializer_class = YouTubeVideoSerializer
+
 class SearchAPIView(generics.ListAPIView):
     queryset = YouTubeVideo.objects.order_by("-published_at")
     serializer_class = YouTubeVideoSerializer
