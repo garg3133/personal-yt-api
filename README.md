@@ -6,6 +6,7 @@
 * GET API (`/videos/`) to retrieve paginated response (videos) from the local database.
 * SEARCH API (`/videos/search/?search=<search_query>`) to retrieve paginated response (videos) based on the search query on video title and description. The Search API also supports fuzzy matching/pratial matching on video title and description.
 * Support for multiple API keys.
+* Dedicated dashboard for accessing and searching the videos (using the APIs created). Accessible at `http://localhost:8000`.
 
 ### Setting-up the project
 
