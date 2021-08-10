@@ -25,6 +25,9 @@
   * Migrate the changes to the database `$ python manage.py migrate`
   * Create admin `$ python manage.py createsuperuser`
   * Run the server `$ python manage.py runserver`
+  * Install and start Redis on your PC.
+  * Run celery worker `$ celery -A worker personal_yt_api worker -l INFO`
+  * Run celery beat (task scheduler) `$ celery -A beat personal_yt_api worker -l INFO`
 
 ### Setting-up the project in docker
 
