@@ -3,26 +3,31 @@ version: '3'
 services:
   redis:
     image: "redis:alpine"
-    ports:
-      - '6379:6379'
+    command: redis-server
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/app
     ports:
       - "8000:8000"
+    environment:
+      REDIS_HOST: redis
   celery:
     build: .
     command: celery -A personal_yt_api worker -l info
     volumes:
-      - .:/code
+      - .:/app
     depends_on:
       - redis
+    environment:
+      REDIS_HOST: redis
   celery-beat:
     build: .
     command: celery -A personal_yt_api beat -l info
     volumes:
-      - .:/code
+      - .:/app
     depends_on:
       - redis
+    environment:
+      REDIS_HOST: redis

@@ -31,7 +31,7 @@
   * Create admin `$ python manage.py createsuperuser`
   * Run the server `$ python manage.py runserver`
   * Install and start Redis on your PC.
-  * Run celery worker `$ celery -A personal_yt_api worker -l INFO`
+  * Run celery worker `$ celery -A personal_yt_api worker --pool=solo -l INFO`
   * Run celery beat (task scheduler) `$ celery -A personal_yt_api beat -l INFO`
 
 ### Setting-up the project in docker

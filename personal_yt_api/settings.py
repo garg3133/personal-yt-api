@@ -132,7 +132,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 YOUTUBE_DATA_API_KEYS = config("YOUTUBE_DATA_API_KEYS")
 YOUTUBE_DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
