@@ -53,6 +53,16 @@
             </div>
         </div>
 
+        <div class="container mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <nav>
+                        <ul class="pagination"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -60,23 +70,30 @@
     
     <script>
         $("#search_input").keyup(function () {
-            const search_input_val = $("#search_input").val();
-            const videos_container = $("#videos_container")
-
-            if (!search_input_val) {
-                videos_container.html("");
+            if (!$("#search_input").val()) {
+                $("#videos_container").html("");
+                $(".pagination").html("");
                 return;
             }
+
+            fetchVideos();
+        });
+
+        function fetchVideos(page=1) {
+            const search_input_val = $("#search_input").val();
+            const videos_container = $("#videos_container");
+            const pagination_ul = $(".pagination");
 
             $.ajax({
                 url: "{% url 'videos_search_api' %}",
                 data: {
-                    'search': search_input_val
+                    'search': search_input_val,
+                    'page': page,
                 },
                 dataType: 'json',
                 success: function (data) {
                     let videos_html = ''
-                    console.log(data)
+
                     for (video of data["results"]) {
                         let publish_date = new Date(video["published_at"]);
 
@@ -102,10 +119,33 @@
                     }
 
                     videos_container.html(videos_html);
+
+                    // Pagination
+                    let total_pages = data["count"]/9;
+                    if (total_pages%9!=0) total_pages += 1;
+
+                    let pagination_html =
+                        `<li class="page-item ${data["previous"]?"":"disabled"}">
+                            <a class="page-link" href="javascript:void(0)" onclick="fetchVideos(${page-1})">Previous</a>
+                        </li>`;
+
+                    for (let page_num=1; page_num<total_pages; page_num++) {
+                        pagination_html +=
+                            `<li class="page-item ${page_num===page?"active":""}">
+                                <a class="page-link" href="javascript:void(0)" onclick="fetchVideos(${page_num})">${page_num}</a>
+                            </li>`;
+                    }
+
+                    pagination_html +=
+                        `<li class="page-item ${data["next"]?"":"disabled"}">
+                            <a class="page-link" href="javascript:void(0)" onclick="fetchVideos(${page+1})">Next</a>
+                        </li>`;
+
+                    if (data["results"].length) pagination_ul.html(pagination_html);
+                    else pagination_ul.html("");
                 }
             });
-            return false;
-        });
+        }
     </script>
 </body>
 
