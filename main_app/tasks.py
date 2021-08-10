@@ -53,6 +53,7 @@ def fetch_yt_videos():
             'channel_title': video["snippet"]["channelTitle"],
             'published_at': video["snippet"]["publishedAt"],
             'thumbnail_url': video["snippet"]["thumbnails"]["high"]["url"],
+            'video_url': f'https://www.youtube.com/watch?v={video["id"]["videoId"]}',
         }
         yt_video_object = YouTubeVideo(**video_dict)
 

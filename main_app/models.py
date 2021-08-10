@@ -8,6 +8,7 @@ class YouTubeVideo(models.Model):
     channel_title = models.CharField(max_length=100)
     published_at = models.DateTimeField()
     thumbnail_url = models.URLField()
+    video_url = models.URLField()
 
     class Meta:
         verbose_name = 'YouTube Video'
