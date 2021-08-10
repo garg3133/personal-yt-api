@@ -98,17 +98,19 @@
                         let publish_date = new Date(video["published_at"]);
 
                         videos_html +=
-                            `<div class="col-md-4">
-                                <div class="card mb-4 shadow-sm d-flex justify-content-center">
+                            `<div class="col-md-4 d-flex justify-content-center">
+                                <div class="card mb-4 shadow-sm">
                                     <img class="bd-placeholder-img card-img-top" width="100%" height="225"
                                         src="${ video.thumbnail_url }" preserveAspectRatio="xMidYMid slice" focusable="false"
                                         role="img" aria-label="Placeholder: Thumbnail"></img>
                                     <div class="card-body">
                                         <p class="font-weight-bold card-text">${ video.title }</p>
                                         <p class="card-text">${ video.description }</p>
+                                    </div>
+                                    <div class="card-footer bg-white">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <p class="m-0"> ${ video.channel_title } </p>
-                                            <small class="text-muted">${ publish_date.toDateString()}
+                                            <p class="font-weight-bold m-0"> ${ video.channel_title } </p>
+                                            <small class="text-muted">${publish_date.toDateString()}
                                                 ${publish_date.getHours()}:${publish_date.getMinutes()}:${publish_date.getSeconds()}
                                             </small>
                                         </div>
