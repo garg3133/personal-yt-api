@@ -1,0 +1,111 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Personal YT API</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        #search_input {
+            max-width: 50rem;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Personal YT API</h1>
+                <p class="lead text-muted">Search anything tech and get latest results. Our database is updated every 5
+                    mins.</p>
+                <div class="input-group mb-3 mt-4">
+                    <input id="search_input" type="text" class="form-control" placeholder="Put your query here">
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5">
+            <div class="container">
+                <div id="videos_container" class="row"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    
+    <script>
+        $("#search_input").keyup(function () {
+            const search_input_val = $("#search_input").val();
+            const videos_container = $("#videos_container")
+
+            if (!search_input_val) {
+                videos_container.html("");
+                return;
+            }
+
+            $.ajax({
+                url: "{% url 'videos_search_api' %}",
+                data: {
+                    'search': search_input_val
+                },
+                dataType: 'json',
+                success: function (data) {
+                    let videos_html = ''
+                    console.log(data)
+                    for (video of data["results"]) {
+                        let publish_date = new Date(video["published_at"]);
+
+                        videos_html +=
+                            `<div class="col-md-4">
+                                <div class="card mb-4 shadow-sm d-flex justify-content-center">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                        src="${ video.thumbnail_url }" preserveAspectRatio="xMidYMid slice" focusable="false"
+                                        role="img" aria-label="Placeholder: Thumbnail"></img>
+                                    <div class="card-body">
+                                        <p class="font-weight-bold card-text">${ video.title }</p>
+                                        <p class="card-text">${ video.description }</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="m-0"> ${ video.channel_title } </p>
+                                            <small class="text-muted">${ publish_date.toDateString()}
+                                                ${publish_date.getHours()}:${publish_date.getMinutes()}:${publish_date.getSeconds()}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                    }
+
+                    videos_container.html(videos_html);
+                }
+            });
+            return false;
+        });
+    </script>
+</body>
+
+</html>
