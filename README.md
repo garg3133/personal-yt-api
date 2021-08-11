@@ -3,8 +3,8 @@
 ### Functionalities
 
 * Asynchronously fetch data (videos) using YouTube API after every 5 minutes and store the data in the database. The search query used to fetch data is `tech`).
-* GET API (`/videos/`) to retrieve paginated response (videos) from the local database.
-* SEARCH API (`/videos/search/?search=<search_query>`) to retrieve paginated response (videos) based on the search query on video title and description. The Search API also supports fuzzy matching/partial matching on video title and description.
+* GET API (`/api/videos/`) to retrieve paginated response (videos) from the local database.
+* SEARCH API (`/api/videos/search/?search=<search_query>`) to retrieve paginated response (videos) based on the search query on video title and description. The Search API also supports fuzzy matching/partial matching on video title and description.
 * Support for multiple API keys.
 * Dedicated dashboard for accessing and searching the videos (using the APIs created, called using AJAX). Accessible at `http://localhost:8000`.
 
